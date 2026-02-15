@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Summarizer by EINSTEIN Corp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container main-container">
+    <h2 class="title">AI Text Summarizer</h2>
+    <p class="subtitle">Ringkas dokumen PDF, Word, atau teks panjang secara otomatis</p>
+
+    <div class="card glass-card">
+        <form method="POST" id="summaryForm" enctype="multipart/form-data">
+            <div class="row g-4">
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Unggah Dokumen</label>
+                        <input type="file" name="file_input" class="form-control custom-file-input" accept=".pdf,.docx,.txt">
+                        <div class="form-text text-center my-2 text-muted">- ATAU TEMPEL TEKS -</div>
+                    </div>
+
+                    <label class="form-label fw-bold">Teks Asli</label>
+                    <textarea class="form-control custom-textarea"
+                              name="content"
+                              rows="10"
+                              id="textAreaInput"
+                              placeholder="Tempelkan teks panjang di sini...">{{ original_text }}</textarea>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-silver w-100" id="submitBtn">
+                            Ringkas
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary w-100" onclick="clearAll()">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Hasil Ringkasan</label>
+                    <div class="output-box fade-in" id="outputBox">
+                        {% if summary %}
+                            <p id="summaryResult">{{ summary }}</p>
+                            <button class="btn btn-sm btn-light mt-2" onclick="copyToClipboard()">📋 Salin Hasil</button>
+                        {% else %}
+                            <span class="placeholder-text">
+                                Hasil ringkasan akan muncul di sini...
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
